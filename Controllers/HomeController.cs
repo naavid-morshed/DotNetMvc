@@ -1,17 +1,12 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using DotNetMvc.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetMvc.Controllers;
 
-public class HomeController : Controller
+public class HomeController(ILogger<HomeController> logger) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
+    private readonly ILogger<HomeController> _logger = logger;
 
     public IActionResult Index()
     {
@@ -26,6 +21,8 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(
+            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
+        );
     }
 }
