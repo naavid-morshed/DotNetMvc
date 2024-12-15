@@ -1,0 +1,33 @@
+@model Item
+@{
+    string msg = "Hello World";
+    List<string> list = ["5", "4", "1", "3", "9"];
+
+    bool loggedIn = false;
+}
+<div>
+    <p>Item @Model.Name</p>
+    <h1>Message: @msg</h1>
+
+    <ol class="text-danger">
+        @foreach (string item in list)
+        {
+            <li>
+                @item
+            </li>
+        }
+    </ol>
+
+    @if (loggedIn)
+    {
+        <h2>
+            You are logged in
+        </h2>
+    }
+    else if (!loggedIn)
+    {
+        <h2>
+            You are logged out
+        </h2>
+    }
+</div>

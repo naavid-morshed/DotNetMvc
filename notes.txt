@@ -1,4 +1,44 @@
 1. // default route pattern, Home folder then Index.cshtml file
    app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
-2. 
+2. Controller name (without the controller part) has to match folder name of Views
+   example: ItemsController has to have a View folder named Views/Items, inside the folder the 
+            cshtml file can have any name.
+
+3. app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+   http://localhost:5232/items/edit?id=5 [query param]
+   http://localhost:5232/items/edit/5 [path param]
+
+   [as per pattern, {id}, http://localhost:5232/items/edit/5 will only work if controller 
+    method param is named id, if named anything other than id then query param has to be used
+    query param works all the time, path param only works if method param is named id or whatever
+    pattern is set in app.MapControllerRoute()]
+
+4. foreach loop in razor:
+   <ol>
+        @foreach (string item in list)
+        {
+            <li>
+                @item
+            </li>
+        }
+    </ol>
+
+5. ifelse:
+   @if (loggedIn)
+    {
+        <h2>
+            "You are logged in"
+        </h2>
+    }
+    else if (!loggedIn)
+    {
+        <h2>
+            "You are logged out"
+        </h2>
+    }
+
+6. Razor Directives:
+   @page, @model, @using [most common]
+
+7. 
