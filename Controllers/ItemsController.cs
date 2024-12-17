@@ -1,33 +1,41 @@
+using DotNetMvc.Data;
 using DotNetMvc.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DotNetMvc.Controllers;
 
-// [Route("[controller]")]
-public class ItemsController : Controller
+public class ItemsController(MyAppContext contex) : Controller
 {
-    // private readonly ILogger<ItemsController> _logger;
+    private readonly MyAppContext _contex = contex;
 
-    // public ItemsController(ILogger<ItemsController> logger)
-    // {
-    //     _logger = logger;
-    // }
-
-    // overview route
-    public IActionResult Overview()
+    public async Task<IActionResult> Index()
     {
-        Item i = new() { Id = 1, Name = "Keyboard" };
-        return View(i);
+        var items = await _contex.Items.ToListAsync();
+        return View(items);
     }
 
-    public IActionResult Edit(int itemId)
+    public IActionResult Create()
     {
-        return Content($"id={itemId}");
+        return View();
     }
 
-    // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    // public IActionResult Error()
+    [HttpPost]
+    public async Task<IActionResult> Create([Bind("Id, Name, Price")] Item item)
+    {
+        if (ModelState.IsValid)
+        {
+            _contex.Items.Add(item);
+            await _contex.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
+
+    // public async Task<IActionResult> Edit(int id)
     // {
-    //     return View("Error!");
+    //     Item item = await _contex.Items.FirstOrDefaultAsync(x => x.Id == id);
+
     // }
 }
