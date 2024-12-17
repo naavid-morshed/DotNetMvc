@@ -1,3 +1,10 @@
+[
+    used three nuget packages:
+    1. Microsoft.EntityFramwork.Core
+    2. Microsoft.EntityFramework.SqlServer
+    3. Microsoft.EntityFramework.Tools
+]
+
 1. // default route pattern, Home folder then Index.cshtml file
    app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 
@@ -41,4 +48,8 @@
 6. Razor Directives:
    @page, @model, @using [most common]
 
-7. 
+7. for db:
+   a) dotnet ef migrations add FirstMigration [creates class file that can be run to update db]
+   b) dotnet ef database update [updates db] [this process can be automated upon booting program]
+
+8. 
